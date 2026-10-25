@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Acceso Administrador - Colegio Guadalupe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap');
+        body { font-family: 'Space Grotesk', sans-serif; background-color: #030712; color: #f3f4f6; }
+        .glass-card { background: rgba(17, 24, 39, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(59, 130, 246, 0.25); }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div class="glass-card rounded-3xl p-8 max-w-md w-full text-center">
+        <div class="bg-blue-600/20 text-blue-400 p-4 rounded-2xl w-16 h-16 mx-auto flex items-center justify-center mb-4 border border-blue-500/30">
+            <i class="fa-solid fa-shield-halved text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white">Panel de Administración</h3>
+        <p class="text-xs text-gray-400 font-mono mb-6 mt-1">U.E. Colegio Nuestra Señora de Guadalupe</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="mb-4 p-3 rounded-xl text-xs font-mono bg-red-900/60 text-red-300 border border-red-500/40">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="/admin" class="space-y-4">
+            <div>
+                <!-- Se utiliza type="password" para que la clave 1619 no se vea reflejada -->
+                <input type="password" name="password" placeholder="Contraseña de acceso" required autofocus class="w-full bg-gray-950 border border-gray-800 rounded-xl px-4 py-3 text-center text-white focus:outline-none focus:border-blue-500 font-mono text-sm">
+            </div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-blue-500/20">
+                Ingresar al Panel
+            </button>
+            <a href="/" class="block text-xs text-gray-500 hover:text-gray-300 mt-3">Volver al formulario</a>
+        </form>
+    </div>
+</body>
+</html>

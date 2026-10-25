@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>U.E. Colegio Nuestra Señora de Guadalupe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+        body { font-family: 'Space Grotesk', sans-serif; background-color: #030712; color: #f3f4f6; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .glass-card { background: rgba(17, 24, 39, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(59, 130, 246, 0.25); box-shadow: 0 0 35px rgba(37, 99, 235, 0.15); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between p-4 sm:p-8">
+
+    <header class="max-w-xl mx-auto w-full flex justify-between items-center py-4 border-b border-gray-800 mb-8">
+        <div class="flex items-center space-x-3">
+            <div class="bg-blue-600 p-2.5 rounded-2xl text-white shadow-lg shadow-blue-500/40">
+                <i class="fa-solid fa-graduation-cap text-xl"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-sm sm:text-base tracking-wider text-white">U.E. Colegio</h1>
+                <p class="text-xs text-blue-400 font-mono">Nuestra Señora de Guadalupe</p>
+            </div>
+        </div>
+        <a href="/admin" class="text-xs font-mono bg-gray-900 border border-gray-800 px-3 py-1.5 rounded-xl text-gray-400 hover:text-white transition">
+            <i class="fa-solid fa-lock me-1"></i> Admin
+        </a>
+    </header>
+
+    <main class="max-w-xl mx-auto w-full flex-grow">
+        <div class="glass-card rounded-3xl p-6 sm:p-8">
+            <div class="mb-6 text-center">
+                <span class="bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-mono px-3 py-1 rounded-full uppercase tracking-wider">Registro Escolar</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white mt-3">Actualización de Datos</h2>
+                <p class="text-gray-400 text-xs sm:text-sm mt-1">Complete la información requerida desde su teléfono celular.</p>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="mb-4 p-4 rounded-xl text-xs sm:text-sm font-mono {% if category == 'success' %}bg-emerald-900/60 text-emerald-300 border border-emerald-500/40{% else %}bg-red-900/60 text-red-300 border border-red-500/40{% endif %}">
+                    <i class="fa-solid {% if category == 'success' %}fa-check-circle{% else %}fa-exclamation-triangle{% endif %} me-2"></i> {{ message }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+
+            <form action="/guardar" method="POST" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-mono text-blue-400 mb-1.5 uppercase font-semibold">
+                        <i class="fa-solid fa-user-tie me-1"></i> Nombre y Apellido del Representante *
+                    </label>
+                    <input type="text" name="rep_nombre" required class="w-full bg-gray-950 border border-gray-800 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-blue-500" placeholder="Ej. Carlos Mendoza">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-mono text-blue-400 mb-1.5 uppercase font-semibold">
+                        <i class="fa-solid fa-phone me-1"></i> Número de Teléfono / WhatsApp *
+                    </label>
+                    <input type="tel" name="rep_telefono" required class="w-full bg-gray-950 border border-gray-800 rounded-xl px-4 py-3.5 text-white text-sm font-mono focus:outline-none focus:border-blue-500" placeholder="Ej. 04121234567">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-mono text-blue-400 mb-1.5 uppercase font-semibold">
+                        <i class="fa-solid fa-graduation-cap me-1"></i> Nombre y Apellido del Estudiante *
+                    </label>
+                    <input type="text" name="est_nombre" required class="w-full bg-gray-950 border border-gray-800 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-blue-500" placeholder="Ej. Valeria Mendoza">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-mono text-blue-400 mb-1.5 uppercase font-semibold">
+                        <i class="fa-solid fa-layer-group me-1"></i> Grado o Año Escolar (Opcional)
+                    </label>
+                    <input type="text" name="est_grado" class="w-full bg-gray-950 border border-gray-800 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-blue-500" placeholder="Ej. 2do Año">
+                </div>
+
+                <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-600/30 transition flex items-center justify-center space-x-2 mt-6">
+                    <span>Transmitir Datos</span>
+                    <i class="fa-solid fa-paper-plane text-sm"></i>
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <footer class="max-w-xl mx-auto w-full text-center py-6 text-xs text-gray-500 font-mono">
+        <p>&copy; 2026 U.E. Colegio Nuestra Señora de Guadalupe</p>
+    </footer>
+
+</body>
+</html>
